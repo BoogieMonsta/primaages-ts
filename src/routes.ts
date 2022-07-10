@@ -27,16 +27,16 @@ function routes(app: Express) {
 
 	app.post('/users', validateResource(createUserSchema), createUserHandler);
 
+	// SESSIONS
 	app.post(
 		'/sessions',
 		validateResource(createSessionSchema),
 		createUserSessionHandler
 	);
-
 	app.get('/sessions', requireUser, getUserSessionsHandler);
-
 	app.delete('/sessions', requireUser, deleteUserSessionHandler);
 
+	// IMAGES
 	app.post(
 		'/images',
 		[requireUser, validateResource(createImageSchema)],

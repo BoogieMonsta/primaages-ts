@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-import { customAlphabet } from 'nanoid';
-
-const nanoId = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 4);
+import { v4 as uuid } from 'uuid';
 
 export interface ImageDocument extends mongoose.Document {
 	image: string;
@@ -17,7 +15,7 @@ const imageSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 		unique: true,
-		default: () => `img-${nanoId()}`,
+		default: () => `img-${uuid()}`,
 	},
 	image: { type: String, required: true },
 	metadata: {
