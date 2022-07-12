@@ -1,10 +1,10 @@
 import { Express, Request, Response } from 'express';
-import { createUserHandler } from './controller/user.controller';
+import { createUserHandler } from './controllers/user.controller';
 import {
 	createUserSessionHandler,
 	getUserSessionsHandler,
 	deleteUserSessionHandler,
-} from './controller/session.controller';
+} from './controllers/session.controller';
 import validateResource from './middleware/validateResource';
 import { createUserSchema } from './schema/user.schema';
 import { createSessionSchema } from './schema/session.schema';
@@ -20,7 +20,7 @@ import {
 	updateImageHandler,
 	getImageHandler,
 	deleteImageHandler,
-} from './controller/image.controller';
+} from './controllers/image.controller';
 
 function routes(app: Express) {
 	app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
