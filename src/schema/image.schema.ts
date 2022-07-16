@@ -3,7 +3,7 @@ import { object, number, string, TypeOf } from 'zod';
 const payload = {
 	body: object({
 		image: string({
-			required_error: 'the image is required',
+			required_error: 'the image link is required',
 		}),
 		metadata: object({
 			width: number({}),
@@ -29,7 +29,7 @@ export const createImageSchema = object({
 });
 
 export const readImageSchema = object({
-    ...params,
+	...params,
 });
 
 export const updateImageSchema = object({

@@ -19,6 +19,7 @@ import {
 	createImageHandler,
 	updateImageHandler,
 	getImageHandler,
+	getAllImagesHandler,
 	deleteImageHandler,
 } from './controllers/image.controller';
 
@@ -42,6 +43,7 @@ function routes(app: Express) {
 		[requireUser, validateResource(createImageSchema)],
 		createImageHandler
 	);
+	app.get('/images', getAllImagesHandler);
 	app.get('/images/:id', validateResource(readImageSchema), getImageHandler);
 	app.put(
 		'/images/:id',
