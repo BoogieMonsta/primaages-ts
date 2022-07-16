@@ -18,7 +18,6 @@ export async function createSessionHandler(req: Request, res: Response) {
 	// create session
 	const session = await createSession(user._id);
 
-	// FIXME: "error:0908F066:PEM routines:get_header_and_data:bad end line"
 	// create access token
 	const accessToken = signJwt(
 		{
