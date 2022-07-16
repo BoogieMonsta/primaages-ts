@@ -18,6 +18,7 @@ export async function createSessionHandler(req: Request, res: Response) {
 	// create session
 	const session = await createSession(user._id);
 
+	// FIXME: "error:0908F066:PEM routines:get_header_and_data:bad end line"
 	// create access token
 	const accessToken = signJwt(
 		{
@@ -27,17 +28,17 @@ export async function createSessionHandler(req: Request, res: Response) {
 		{ expiresIn: config.get('accessTokenTtl') } // Time To Live: 15 min
 	);
 
-	// create refresh token
-	const refreshToken = signJwt(
-		{
-			...user,
-			session: session._id,
-		},
-		{ expiresIn: config.get('refreshTokenTtl') } // Time To Live: 15 min
-	);
+	// // create refresh token
+	// const refreshToken = signJwt(
+	// 	{
+	// 		...user,
+	// 		session: session._id,
+	// 	},
+	// 	{ expiresIn: config.get('refreshTokenTtl') } // Time To Live: 1h
+	// );
 
 	// return access & refresh tokens
-	return res.send({ accessToken, refreshToken });
+	return res.send({ accessToken });
 }
 
 export async function getSessionsHandler(req: Request, res: Response) {
