@@ -28,14 +28,14 @@ export async function createSessionHandler(req: Request, res: Response) {
 		{ expiresIn: config.get('accessTokenTtl') } // Time To Live: 15 min
 	);
 
-	// // create refresh token
-	// const refreshToken = signJwt(
-	// 	{
-	// 		...user,
-	// 		session: session._id,
-	// 	},
-	// 	{ expiresIn: config.get('refreshTokenTtl') } // Time To Live: 1h
-	// );
+	// create refresh token
+	const refreshToken = signJwt(
+		{
+			...user,
+			session: session._id,
+		},
+		{ expiresIn: config.get('refreshTokenTtl') } // Time To Live: 1h
+	);
 
 	// return access & refresh tokens
 	return res.send({ accessToken });
