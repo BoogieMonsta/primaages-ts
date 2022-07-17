@@ -32,7 +32,7 @@ export async function updateImageHandler(
 	const imgId = req.params.id;
 	const update = req.body;
 
-	const image = await findImage({ imgId });
+	const image = await findImage(imgId);
 	if (!image) {
 		return res.sendStatus(404);
 	}
@@ -49,7 +49,7 @@ export async function getImageHandler(
 	res: Response
 ) {
 	const imgId = req.params.id;
-	const image = await findImage({ imgId });
+	const image = await findImage(imgId);
 	if (!image) {
 		return res.sendStatus(404);
 	}
@@ -70,7 +70,7 @@ export async function deleteImageHandler(
 ) {
 	const imgId = req.params.id;
 
-	const image = await findImage({ imgId });
+	const image = await findImage(imgId);
 	if (!image) {
 		return res.sendStatus(404);
 	}

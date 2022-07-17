@@ -41,7 +41,7 @@ export async function createSessionHandler(req: Request, res: Response) {
 }
 
 export async function getSessionsHandler(req: Request, res: Response) {
-	const userId = res.locals.user._id;
+	const userId = res.locals.user.id; // safe thanks to requireUser middleware
 
 	const sessions = await getSessions({ user: userId, valid: true });
 

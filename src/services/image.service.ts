@@ -9,11 +9,8 @@ import {
 export async function createImage(input: DocumentDefinition<ImageDocument>) {
 	return ImageModel.create(input);
 }
-export async function findImage(
-	query: FilterQuery<ImageDocument>,
-	options: QueryOptions = { lean: true }
-) {
-	return ImageModel.findOne(query, {}, options);
+export async function findImage(imgId: string) {
+	return ImageModel.findOne({ id: imgId });
 }
 export async function findAllImages() {
 	return ImageModel.find({});
