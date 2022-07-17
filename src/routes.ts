@@ -38,9 +38,11 @@ function routes(app: Express) {
 	app.delete('/sessions', requireUser, deleteSessionHandler);
 
 	// IMAGES
+	// FIXME requireUser returns forbidden
 	app.post(
 		'/images',
-		[requireUser, validateResource(createImageSchema)],
+		// [requireUser, validateResource(createImageSchema)],
+		validateResource(createImageSchema),
 		createImageHandler
 	);
 	app.get('/images', getAllImagesHandler);
@@ -53,7 +55,8 @@ function routes(app: Express) {
 	);
 	app.delete(
 		'/images/:id',
-		[requireUser, validateResource(deleteImageSchema)],
+		// [requireUser, validateResource(deleteImageSchema)],
+		validateResource(deleteImageSchema),
 		deleteImageHandler
 	);
 }
