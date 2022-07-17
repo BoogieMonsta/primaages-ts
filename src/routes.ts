@@ -47,7 +47,8 @@ function routes(app: Express) {
 	app.get('/images/:id', validateResource(readImageSchema), getImageHandler);
 	app.put(
 		'/images/:id',
-		[requireUser, validateResource(updateImageSchema)],
+		// [requireUser, validateResource(updateImageSchema)],
+		validateResource(updateImageSchema),
 		updateImageHandler
 	);
 	app.delete(
