@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import config from 'config';
-import { createSession, getSessions, updateSession } from '../services/session.service';
+import {
+	createSession,
+	getSessions,
+	updateSession,
+} from '../services/session.service';
 import { validatePassword } from '../services/user.service';
 import { signJwt } from '../utils/jwt.utils';
 
-export async function createUserSessionHandler(req: Request, res: Response) {
+export async function createSessionHandler(req: Request, res: Response) {
 	// validate user password
 	const user = await validatePassword(req.body);
 	if (!user) {
@@ -29,14 +33,14 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 			...user,
 			session: session._id,
 		},
-		{ expiresIn: config.get('refreshTokenTtl') } // Time To Live: 15 min
+		{ expiresIn: config.get('refreshTokenTtl') } // Time To Live: 1h
 	);
 
 	// return access & refresh tokens
-	return res.send({ accessToken, refreshToken });
+	return res.send({ accessToken });
 }
 
-export async function getUserSessionsHandler(req: Request, res: Response) {
+export async function getSessionsHandler(req: Request, res: Response) {
 	const userId = res.locals.user._id;
 
 	const sessions = await getSessions({ user: userId, valid: true });
@@ -44,7 +48,7 @@ export async function getUserSessionsHandler(req: Request, res: Response) {
 	return res.send(sessions);
 }
 
-export async function deleteUserSessionHandler(req: Request, res: Response) {
+export async function deleteSessionHandler(req: Request, res: Response) {
 	const sessionId = res.locals.user.session; // safe thanks to requireUser middleware
 
 	await updateSession({ _id: sessionId }, { valid: false });

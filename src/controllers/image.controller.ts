@@ -1,10 +1,16 @@
 import { Request, Response } from 'express';
-import { CreateImageInput, UpdateImageInput } from '../schema/image.schema';
+import {
+	CreateImageInput,
+	ReadImageInput,
+	UpdateImageInput,
+	DeleteImageInput,
+} from '../schema/image.schema';
 import {
 	createImage,
 	findAndUpdateImage,
 	findImage,
 	deleteImage,
+	findAllImages,
 } from '../services/image.service';
 
 export async function createImageHandler(
@@ -39,7 +45,7 @@ export async function updateImageHandler(
 }
 
 export async function getImageHandler(
-	req: Request<UpdateImageInput['params']>,
+	req: Request<ReadImageInput['params']>,
 	res: Response
 ) {
 	const imgId = req.params.id;
@@ -47,12 +53,19 @@ export async function getImageHandler(
 	if (!image) {
 		return res.sendStatus(404);
 	}
-
 	return res.send(image);
 }
 
+export async function getAllImagesHandler(req: Request, res: Response) {
+	const images = await findAllImages();
+	if (!images) {
+		return res.sendStatus(404);
+	}
+	return res.send(images);
+}
+
 export async function deleteImageHandler(
-	req: Request<UpdateImageInput['params']>,
+	req: Request<DeleteImageInput['params']>,
 	res: Response
 ) {
 	const imgId = req.params.id;

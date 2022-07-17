@@ -1,9 +1,9 @@
 import { Express, Request, Response } from 'express';
 import { createUserHandler } from './controllers/user.controller';
 import {
-	createUserSessionHandler,
-	getUserSessionsHandler,
-	deleteUserSessionHandler,
+	createSessionHandler,
+	getSessionsHandler,
+	deleteSessionHandler,
 } from './controllers/session.controller';
 import validateResource from './middleware/validateResource';
 import { createUserSchema } from './schema/user.schema';
@@ -19,6 +19,7 @@ import {
 	createImageHandler,
 	updateImageHandler,
 	getImageHandler,
+	getAllImagesHandler,
 	deleteImageHandler,
 } from './controllers/image.controller';
 
@@ -31,10 +32,10 @@ function routes(app: Express) {
 	app.post(
 		'/sessions',
 		validateResource(createSessionSchema),
-		createUserSessionHandler
+		createSessionHandler
 	);
-	app.get('/sessions', requireUser, getUserSessionsHandler);
-	app.delete('/sessions', requireUser, deleteUserSessionHandler);
+	app.get('/sessions', requireUser, getSessionsHandler);
+	app.delete('/sessions', requireUser, deleteSessionHandler);
 
 	// IMAGES
 	app.post(
@@ -42,6 +43,7 @@ function routes(app: Express) {
 		[requireUser, validateResource(createImageSchema)],
 		createImageHandler
 	);
+	app.get('/images', getAllImagesHandler);
 	app.get('/images/:id', validateResource(readImageSchema), getImageHandler);
 	app.put(
 		'/images/:id',

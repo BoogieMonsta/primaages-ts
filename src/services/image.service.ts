@@ -15,6 +15,9 @@ export async function findImage(
 ) {
 	return ImageModel.findOne(query, {}, options);
 }
+export async function findAllImages() {
+	return ImageModel.find({});
+}
 export async function findAndUpdateImage(
 	query: FilterQuery<ImageDocument>,
 	update: UpdateQuery<ImageDocument>,
