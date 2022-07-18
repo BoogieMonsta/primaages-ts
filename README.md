@@ -4,8 +4,7 @@ A simple image gallery API made as a test project with [Express.js](https://expr
 
 At the top of the backlog:
 
-- edit image description bug fix
-- Sessions: Access & Refresh Tokens bug fix
+- sessions: access & refresh tokens bug fix
 - deployment (Heroku + Docker)
 
 ## Development server

@@ -16,11 +16,10 @@ export async function findAllImages() {
 	return ImageModel.find({});
 }
 export async function findAndUpdateImage(
-	query: FilterQuery<ImageDocument>,
-	update: UpdateQuery<ImageDocument>,
-	options: QueryOptions
+	imgId: string,
+	update: UpdateQuery<ImageDocument>
 ) {
-	return ImageModel.findOneAndUpdate(query, update, options);
+	return ImageModel.findByIdAndUpdate(imgId, update);
 }
 export async function deleteImage(query: FilterQuery<ImageDocument>) {
 	return ImageModel.deleteOne(query);

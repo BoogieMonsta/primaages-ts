@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { omit } from 'lodash';
 import {
 	CreateImageInput,
 	ReadImageInput,
@@ -30,16 +31,24 @@ export async function updateImageHandler(
 	res: Response
 ) {
 	const imgId = req.params.id;
-	const update = req.body;
+	const description = req.body.metadata.description;
 
+	// TODO: don't delete doc before safely replacing it
 	const image = await findImage(imgId);
 	if (!image) {
 		return res.sendStatus(404);
-	}
+	} else await deleteImage({ id: imgId });
 
-	const updatedImage = await findAndUpdateImage({ imgId }, update, {
-		new: true,
-	});
+	console.log('image fetched: ', image);
+	console.log(description);
+
+	image.metadata.description = description;
+	console.log('image after mod: ', image);
+
+	const update = omit(image, '__v', '_id', 'id');
+	console.log('image update: ', update);
+
+	const updatedImage = await createImage(update);
 
 	return res.send(updatedImage);
 }
